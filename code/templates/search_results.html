@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Lost and Found</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+
+    <p>Results for: <strong>{{ search_term }}</strong></p>
+
+    <a href="{{ url_for('index') }}">Back to Full List</a>
+
+    <form action="{{ url_for('search') }}" method="GET">
+        <input type="text" name="search" placeholder="Search by name...">
+        <button type="submit">Search</button>
+    </form>
+
+    # List the search results 
+    {% if items %}
+        <ul>
+            {% for item in items %}
+                <li>{{ item.name }} - {{ item.description }} ({{ 'Lost' if item.is_lost else 'Found' }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No items found. Try a different search term.</p>
+    {% endif %}
+    
+</body>
+</html>

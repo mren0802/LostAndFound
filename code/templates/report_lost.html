@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Lost Item</title>
+</head>
+
+<style>
+    h1 {
+        font-family: monospace;
+        text-align: center;
+        background-color: lightblue;
+    }
+</style>
+
+<body>
+    <h1>Report a Lost Item</h1>
+
+    <form action="/report_lost" method="POST">
+        
+    <div>{{ form.name.label }}: {{ form.name }}</div>
+        <!-- <label for="name">Item Name: </label>
+        <input type="text" id="name" name="name" required>
+        <br /><br /> -->
+        <br /><br />
+        <div>{{ form.description.label }}: {{ form.description }}</div>
+        <br /><br />
+        <div> {{ form.submit }} </div>
+    </form>
+    
+</body>
+</html>

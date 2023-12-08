@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost and Found</title>
+</head>
+<style>
+    h1 {
+        font-family: monospace;
+        text-align: center;
+        background-color: lightblue;
+    }
+
+    h2 {
+        font-family: monospace;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+        background-color: #111;
+    }
+
+    .active {
+        background-color: #047eaa;
+    }
+    #flash-messages {
+    text-align: center;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #dc3545; 
+    color: white;
+    border-radius: 5px;
+    }
+
+    /****https://www.w3schools.com/css/css_navbar.asp ***/
+</style>
+
+<body>
+    <h1>Babson's Lost & Found</h1>
+
+    <ul>
+        <li><a class="active" href="{{ url_for('report_lost') }}">Report a Lost Item</a></li>
+        <li style="float:right"><a class="active" href="{{ url_for('report_found') }}">Report a Found Item</a></li>
+    </ul>
+<br/><br/>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div id="flash-messages">
+          {% for message in messages %}
+            <div class="flash-message">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('search') }}" method="GET">
+        <label for="search">Search By Name: </label>
+        <input type="text" id="search" name="search" required>
+        <button type="submit">Search</button>
+    </form><br /><br />
+
+    <h2>List of Lost and Found Items</h2>
+    <ul>
+        {% for item in items %}
+        <li>{{ item.name }} - {{ item.description }} ({{ "Lost" if item.is_lost else "Found" }})</li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>

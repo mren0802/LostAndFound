@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost and Found - List Items</title>
+</head>
+<body>
+    <h1>List of Lost and Found Items</h1>
+
+    <ul>
+        {% for item in items %}
+            <li>
+                <strong>{{ item.name }}</strong>
+                <p>{{ item.description }}</p>
+                <p>{{ "Lost" if item.is_lost else "Found" }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

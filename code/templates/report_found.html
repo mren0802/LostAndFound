@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Found Item</title>
+</head>
+
+<style>
+    h1 {
+        font-family: monospace;
+        text-align: center;
+        background-color: lightblue;
+    }
+</style>
+
+<body>
+    <h1>Report a Found Item</h1>
+    <form action="/report_found" method="POST">
+    <!-- <form action="{{ url_for('report_found') }}" method="POST"> -->
+
+        <div>{{ form.name.label }}: {{ form.name }}</div>
+        <br /><br />
+        <div>{{ form.description.label }}: {{ form.description }}</div>
+        <br /><br />
+        <div> {{ form.submit }} </div>
+
+        <!-- <label for="name">Item Name: </label>
+        <input type="text" id="name" name="name" required>
+        <br /><br />
+        <label for="description">Item Description: </label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+        
+        <br/><br/>
+
+        <button type="submit">Submit Report</button> -->
+    </form>
+</body>
+
+</html>
