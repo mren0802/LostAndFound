@@ -18,7 +18,7 @@
     }
 
     ul {
-        list-style-type: none;
+        /* list-style-type: none; */
         margin: 0;
         padding: 0;
         overflow: hidden;
@@ -53,6 +53,43 @@
     border-radius: 5px;
     }
 
+    .item-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            width: 100%;
+            background-color: white;
+        }
+
+        .item {
+            background-color: white;
+            border: 1px solid #ddd;
+            margin-top: -1px; /* Prevents double borders */
+            padding: 10px;
+            transition: background-color 0.2s;
+            box-sizing: border-box; /* Ensures padding doesn't add to the width */
+            width: 100%; /* Sets the list items to take full width of the ul */
+        }
+
+        .item:hover {
+            background-color: #efefef;
+        }
+
+        .item-status-lost {
+            color: red;
+        }
+
+        .item-status-found {
+            color: green;
+        }
+
+        .item-name {
+            font-weight: bold;
+        }
+
+        .item-description {
+            margin-left: 10px;
+        }
+
     /****https://www.w3schools.com/css/css_navbar.asp ***/
 </style>
 
@@ -76,15 +113,22 @@
     {% endwith %}
 
     <form action="{{ url_for('search') }}" method="GET">
+        <br>
         <label for="search">Search By Name: </label>
         <input type="text" id="search" name="search" required>
         <button type="submit">Search</button>
     </form><br /><br />
 
     <h2>List of Lost and Found Items</h2>
-    <ul>
+    <ul class="item-list">
         {% for item in items %}
-        <li>{{ item.name }} - {{ item.description }} ({{ "Lost" if item.is_lost else "Found" }})</li>
+        <li class="item">
+            <span class="item-name">{{ item.name }}</span>
+            - <span class="item-description">{{item.description }} </span>
+            <span class="{{'item-status-lost' if item.is_lost else 'item-status-found' }}">
+                ({{ "Lost" if item.is_lost else "Found" }})
+            </span>
+        </li>
         {% endfor %}
     </ul>
 </body>

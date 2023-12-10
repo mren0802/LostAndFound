@@ -5,19 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results - Lost and Found</title>
 </head>
+
+<style>
+    h1 {
+        font-family: monospace;
+        text-align: center;
+        background-color: lightblue;
+    }
+
+    h2 {
+        font-family: monospace;
+        text-decoration: underline;
+    }
+
+    ul{
+        padding-left: 20px;
+    }
+
+    li{
+        font-size: larger;
+    }
+</style>
+
 <body>
     <h1>Search Results</h1>
+    <h2>List of Items Reported Lost</h2>
 
-    <p>Results for: <strong>{{ search_term }}</strong></p>
-
-    <a href="{{ url_for('index') }}">Back to Full List</a>
-
-    <form action="{{ url_for('search') }}" method="GET">
-        <input type="text" name="search" placeholder="Search by name...">
-        <button type="submit">Search</button>
-    </form>
-
-    # List the search results 
     {% if items %}
         <ul>
             {% for item in items %}
@@ -25,8 +38,9 @@
             {% endfor %}
         </ul>
     {% else %}
-        <p>No items found. Try a different search term.</p>
+        <p>No lost items found. Try a different search term.</p>
     {% endif %}
-    
+    <br /><br />
+    <a href="{{ url_for('index')}}">Back to Home Page</a>
 </body>
 </html>
