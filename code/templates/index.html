@@ -125,6 +125,11 @@
         <li class="item">
             <span class="item-name">{{ item.name }}</span>
             - <span class="item-description">{{item.description }} </span>
+            {% if item.image_path %} <!-- Check if there is an image path -->
+                <div class="item-image">
+                    <img src="{{ url_for('static', filename=item.image_path) }}" alt="{{ item.name }}" style="max-width: 100px; max-height: 100px;">
+                </div>
+            {% endif %}
             <span class="{{'item-status-lost' if item.is_lost else 'item-status-found' }}">
                 ({{ "Lost" if item.is_lost else "Found" }})
             </span>

@@ -11,7 +11,11 @@ class LostAndFoundItem(db.Model):
     # adding an image path
     image_path = db.Column(db.String(255), nullable=True)
 
-    def __init__(self, name, description, is_lost):
+    def __init__(self, name, description, is_lost, image_path=None):
         self.name = name
         self.description = description
         self.is_lost = is_lost
+        self.image_path = image_path
+
+
+

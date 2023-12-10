@@ -7,10 +7,6 @@ from forms import LostItemForm, FoundItemForm
 import os
 from werkzeug.utils import secure_filename
 
-# Path for image uploads
-Upload_Folder = "path/to/uploaded/images"
-Allowed_Extensions = {"png", "jpg", "jpeg", "gif"}
-
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -19,8 +15,11 @@ app.config[
 ] = "mysql://root:password@localhost:3306/lostandfound"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "food"
-app.config['Upload_Folder'] = Upload_Folder
+app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'uploads')
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
 
+# Ensure the upload directory exists
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # bind SQLAlchemy to Flask
 db.init_app(app)
@@ -31,7 +30,7 @@ with app.app_context():
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in Allowed_Extensions
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route("/", methods=["GET"])
 def index():
@@ -66,10 +65,17 @@ def report_lost():
     if request.method == "POST":
         lostitem_form = LostItemForm(formdata=request.form)
         if lostitem_form.validate():
+            file = request.files['image']
+            image_path = None
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                image_path = os.path.join('uploads', filename).replace('\\', '/')
+
             lost_item = LostAndFoundItem(
                 name=lostitem_form.name.data,
                 description=lostitem_form.description.data,
-                is_lost=True,
+                is_lost=True, image_path=image_path
             )
             try:
                 db.session.add(lost_item)
